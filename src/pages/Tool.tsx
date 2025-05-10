@@ -1,18 +1,52 @@
 
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { useState, useEffect } from "react";
+import { toast } from "sonner";
 
 const Tool = () => {
+  const [isLoading, setIsLoading] = useState(true);
+  
+  useEffect(() => {
+    // Add a listener to check if iframe loaded correctly
+    const timeoutId = setTimeout(() => {
+      if (isLoading) {
+        toast.error("Model is taking longer than expected to load. Please be patient.", {
+          duration: 5000,
+        });
+      }
+    }, 8000);
+    
+    return () => clearTimeout(timeoutId);
+  }, [isLoading]);
+
+  const handleIframeLoad = () => {
+    setIsLoading(false);
+    toast.success("Risk prediction model loaded successfully!", {
+      duration: 3000,
+    });
+  };
+
+  const handleIframeError = () => {
+    setIsLoading(false);
+    toast.error("There was an issue loading the model. Please try refreshing.", {
+      duration: 5000,
+    });
+  };
+
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
       
       <main className="flex-grow">
-        {/* Header */}
-        <section className="bg-lt-blue text-white py-10">
-          <div className="lt-container">
-            <h1 className="text-3xl font-bold mb-4">Risk Prediction Tool</h1>
-            <p className="text-xl">
+        {/* Header with uploaded building image background */}
+        <section className="py-10 bg-cover bg-center bg-no-repeat" style={{ 
+          backgroundImage: "url('/lovable-uploads/b4b1ef68-9610-4f3f-a205-abb112402ae0.png')", 
+          minHeight: "300px" 
+        }}>
+          <div className="lt-container bg-black bg-opacity-50 py-10 rounded-lg">
+            <h1 className="text-3xl font-bold mb-4 text-white">Risk Prediction Tool</h1>
+            <p className="text-xl text-white">
               Use our AI-powered tool to analyze and predict risks for your construction projects
             </p>
           </div>
@@ -30,13 +64,29 @@ const Tool = () => {
                 </p>
               </div>
               
-              {/* Streamlit Embed */}
-              <div className="relative pt-0 h-[800px] border border-gray-200 rounded-lg overflow-hidden shadow-inner">
-                <iframe 
-                  src="https://1priyayadav-construction-optimization-main-app-l6bllv.streamlit.app/" 
-                  title="L&T Risk Prediction Tool" 
-                  className="absolute top-0 left-0 w-full h-full"
-                />
+              {/* Enhanced Streamlit Embed with error handling */}
+              <div className="relative pt-0 border border-gray-200 rounded-lg overflow-hidden shadow-inner">
+                {isLoading && (
+                  <div className="absolute inset-0 flex items-center justify-center bg-lt-gray bg-opacity-75 z-10">
+                    <div className="text-center">
+                      <div className="inline-block animate-spin rounded-full h-8 w-8 border-4 border-lt-blue border-t-transparent mb-2"></div>
+                      <p className="text-lt-blue font-medium">Loading Risk Prediction Model...</p>
+                    </div>
+                  </div>
+                )}
+                
+                <div className="h-[800px]">
+                  <iframe 
+                    src="https://1priyayadav-construction-optimization-main-app-l6bllv.streamlit.app/?embedded=true" 
+                    title="L&T Risk Prediction Tool" 
+                    width="100%" 
+                    height="100%" 
+                    onLoad={handleIframeLoad}
+                    onError={handleIframeError}
+                    allowFullScreen
+                    style={{ border: "none" }}
+                  />
+                </div>
               </div>
               
               <div className="mt-6">
