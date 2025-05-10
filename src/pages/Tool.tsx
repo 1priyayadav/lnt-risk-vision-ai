@@ -3,14 +3,16 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
+import { ChevronDown, ChevronUp } from "lucide-react";
 
 const Tool = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const [showModel, setShowModel] = useState(false);
   
   useEffect(() => {
     // Add a listener to check if iframe loaded correctly
     const timeoutId = setTimeout(() => {
-      if (isLoading) {
+      if (isLoading && showModel) {
         toast.error("Model is taking longer than expected to load. Please be patient.", {
           duration: 5000,
         });
@@ -18,20 +20,28 @@ const Tool = () => {
     }, 8000);
     
     return () => clearTimeout(timeoutId);
-  }, [isLoading]);
+  }, [isLoading, showModel]);
 
   const handleIframeLoad = () => {
     setIsLoading(false);
-    toast.success("Risk prediction model loaded successfully!", {
-      duration: 3000,
-    });
+    if (showModel) {
+      toast.success("Risk prediction model loaded successfully!", {
+        duration: 3000,
+      });
+    }
   };
 
   const handleIframeError = () => {
     setIsLoading(false);
-    toast.error("There was an issue loading the model. Please try refreshing.", {
-      duration: 5000,
-    });
+    if (showModel) {
+      toast.error("There was an issue loading the model. Please try refreshing.", {
+        duration: 5000,
+      });
+    }
+  };
+
+  const toggleModelVisibility = () => {
+    setShowModel(!showModel);
   };
 
   return (
@@ -56,48 +66,59 @@ const Tool = () => {
         <section className="py-10">
           <div className="lt-container">
             <div className="bg-white rounded-lg shadow-lg p-6">
-              <div className="mb-6">
-                <h2 className="text-2xl font-bold mb-2">Integrated Risk Prediction Dashboard</h2>
-                <p className="text-gray-600">
-                  This dashboard provides real-time risk assessment and visualization for your construction projects.
-                  The tool leverages advanced machine learning algorithms to analyze project data and identify potential risks.
-                </p>
-              </div>
-              
-              {/* Enhanced Streamlit Embed with error handling */}
-              <div className="relative pt-0 border border-gray-200 rounded-lg overflow-hidden shadow-inner">
-                {isLoading && (
-                  <div className="absolute inset-0 flex items-center justify-center bg-lt-gray bg-opacity-75 z-10">
-                    <div className="text-center">
-                      <div className="inline-block animate-spin rounded-full h-8 w-8 border-4 border-lt-blue border-t-transparent mb-2"></div>
-                      <p className="text-lt-blue font-medium">Loading Risk Prediction Model...</p>
-                    </div>
-                  </div>
-                )}
-                
-                <div className="h-[800px]">
-                  <iframe 
-                    src="https://1priyayadav-construction-optimization-main-app-l6bllv.streamlit.app/?embedded=true" 
-                    title="L&T Risk Prediction Tool" 
-                    width="100%" 
-                    height="100%" 
-                    onLoad={handleIframeLoad}
-                    onError={handleIframeError}
-                    allowFullScreen
-                    style={{ border: "none" }}
-                  />
+              <div 
+                className="mb-6 flex justify-between items-center cursor-pointer hover:bg-lt-gray hover:bg-opacity-10 p-2 rounded-lg transition-all"
+                onClick={toggleModelVisibility}
+              >
+                <h2 className="text-2xl font-bold">Integrated Risk Prediction Dashboard</h2>
+                <div className="text-lt-blue">
+                  {showModel ? <ChevronUp size={24} /> : <ChevronDown size={24} />}
                 </div>
               </div>
               
-              <div className="mt-6">
-                <h3 className="text-xl font-semibold mb-2">How to use this tool:</h3>
-                <ol className="list-decimal list-inside space-y-2 text-gray-700">
-                  <li>Input your project parameters in the left sidebar</li>
-                  <li>Review the generated risk assessment visualizations</li>
-                  <li>Analyze the risk factors and their potential impact</li>
-                  <li>Download reports or export data for further analysis</li>
-                </ol>
-              </div>
+              {showModel && (
+                <>
+                  <p className="text-gray-600 mb-6">
+                    This dashboard provides real-time risk assessment and visualization for your construction projects.
+                    The tool leverages advanced machine learning algorithms to analyze project data and identify potential risks.
+                  </p>
+                  
+                  {/* Enhanced Streamlit Embed with error handling */}
+                  <div className="relative pt-0 border border-gray-200 rounded-lg overflow-hidden shadow-inner">
+                    {isLoading && (
+                      <div className="absolute inset-0 flex items-center justify-center bg-lt-gray bg-opacity-75 z-10">
+                        <div className="text-center">
+                          <div className="inline-block animate-spin rounded-full h-8 w-8 border-4 border-lt-blue border-t-transparent mb-2"></div>
+                          <p className="text-lt-blue font-medium">Loading Risk Prediction Model...</p>
+                        </div>
+                      </div>
+                    )}
+                    
+                    <div className="h-[800px]">
+                      <iframe 
+                        src="https://1priyayadav-construction-optimization-main-app-l6bllv.streamlit.app/?embedded=true" 
+                        title="L&T Risk Prediction Tool" 
+                        width="100%" 
+                        height="100%" 
+                        onLoad={handleIframeLoad}
+                        onError={handleIframeError}
+                        allowFullScreen
+                        style={{ border: "none" }}
+                      />
+                    </div>
+                  </div>
+                  
+                  <div className="mt-6">
+                    <h3 className="text-xl font-semibold mb-2">How to use this tool:</h3>
+                    <ol className="list-decimal list-inside space-y-2 text-gray-700">
+                      <li>Input your project parameters in the left sidebar</li>
+                      <li>Review the generated risk assessment visualizations</li>
+                      <li>Analyze the risk factors and their potential impact</li>
+                      <li>Download reports or export data for further analysis</li>
+                    </ol>
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </section>
