@@ -85,13 +85,13 @@ const Index = () => {
         </div>
       </section>
       
-      {/* Tool Preview Section */}
+      {/* Tool Preview Section - Modified to remove dashboard reference */}
       <section className="py-16 bg-lt-gray">
         <div className="lt-container">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Integrated Risk Prediction Dashboard</h2>
+            <h2 className="text-3xl font-bold mb-4">AI-Powered Construction Risk Analysis</h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Our AI-driven tool helps project managers, engineers, and planners monitor and manage risks in real time.
+              Our advanced tools help project managers, engineers, and planners monitor and manage risks in real time.
             </p>
           </div>
           
@@ -103,7 +103,7 @@ const Index = () => {
             />
             <div className="text-center">
               <Link to="/tool" className="inline-flex items-center lt-btn-primary">
-                Launch Risk Prediction Tool
+                Explore Risk Analysis Tool
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </div>
@@ -161,7 +161,7 @@ const Index = () => {
         </div>
       </section>
       
-      {/* Contact Section */}
+      {/* Contact Section - Removed the send message form */}
       <section id="contact" className="py-16 bg-lt-blue text-white">
         <div className="lt-container">
           <div className="text-center mb-12">
@@ -172,7 +172,7 @@ const Index = () => {
           </div>
           
           <div className="max-w-3xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="text-center">
                 <div className="h-14 w-14 bg-white rounded-full flex items-center justify-center mb-4 mx-auto">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-lt-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -204,34 +204,6 @@ const Index = () => {
                 <p>L&T Technology Services, Mumbai</p>
               </div>
             </div>
-            
-            <div className="bg-white rounded-lg p-8">
-              <form className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label htmlFor="name" className="block text-gray-700 font-medium mb-2">Name</label>
-                    <input type="text" id="name" className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-lt-blue focus:border-transparent" />
-                  </div>
-                  <div>
-                    <label htmlFor="email" className="block text-gray-700 font-medium mb-2">Email</label>
-                    <input type="email" id="email" className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-lt-blue focus:border-transparent" />
-                  </div>
-                </div>
-                <div>
-                  <label htmlFor="subject" className="block text-gray-700 font-medium mb-2">Subject</label>
-                  <input type="text" id="subject" className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-lt-blue focus:border-transparent" />
-                </div>
-                <div>
-                  <label htmlFor="message" className="block text-gray-700 font-medium mb-2">Message</label>
-                  <textarea id="message" rows={5} className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-lt-blue focus:border-transparent"></textarea>
-                </div>
-                <div className="text-center">
-                  <button type="submit" className="lt-btn-primary">
-                    Send Message
-                  </button>
-                </div>
-              </form>
-            </div>
           </div>
         </div>
       </section>
@@ -242,3 +214,4 @@ const Index = () => {
 };
 
 export default Index;
+
