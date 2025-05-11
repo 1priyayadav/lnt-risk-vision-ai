@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 
 const Tool = () => {
   const handleOpenModel = () => {
-    window.open("https://1priyayadav-construction-optimization-main-app-l6bllv.streamlit.app/", "_blank");
+    window.open("https://constructionriskdashboard-fhfthsx5etlr2womdmdguw.streamlit.app/", "_blank");
   };
 
   return (
